@@ -1,0 +1,37 @@
+name: Fleet agent configuration tests
+on:
+  pull_request:
+    paths:
+      - '.github/scripts/oc_fleet_agent_runtime.py'
+      - '.github/scripts/oc_fleet_contract.py'
+      - '.github/scripts/test_oc_fleet_agent_runtime.py'
+      - '.github/scripts/test_oc_fleet_failure_category.py'
+      - '.github/scripts/test_oc_fleet_free_cloud_smoke.py'
+      - '.github/scripts/test_oc_fleet_parallel_agent_smoke.py'
+      - '.github/workflows/oc-fleet-worker.yml'
+      - '.github/workflows/oc-fleet-free-model-smoke.yml'
+      - '.github/workflows/oc-fleet-parallel-agent-smoke.yml'
+      - '.github/workflows/oc-fleet-agent-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/oc_fleet_agent_runtime.py'
+      - '.github/scripts/oc_fleet_contract.py'
+      - '.github/scripts/test_oc_fleet_agent_runtime.py'
+      - '.github/scripts/test_oc_fleet_failure_category.py'
+      - '.github/scripts/test_oc_fleet_free_cloud_smoke.py'
+      - '.github/scripts/test_oc_fleet_parallel_agent_smoke.py'
+      - '.github/workflows/oc-fleet-worker.yml'
+      - '.github/workflows/oc-fleet-free-model-smoke.yml'
+      - '.github/workflows/oc-fleet-parallel-agent-smoke.yml'
+      - '.github/workflows/oc-fleet-agent-tests.yml'
+permissions:
+  contents: read
+jobs:
+  offline-agent-config:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      - name: Validate reviewed primary agent configuration (no model)
+        run: python3 -m unittest discover -s .github/scripts -p 'test_oc_fleet_*.py' -v
